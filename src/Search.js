@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import escapeRegExp from 'escape-string-regexp'
 import BookListItem from './BookListItem'
 import * as BooksAPI from './BooksAPI'
 
@@ -16,10 +15,15 @@ class Search extends Component {
         })
         BooksAPI.search(query.trim()).then((books)=>{
             if(books){
-                console.log(books)
             this.setState({
                 results: books
             })}
+            else{
+                this.setState({
+                    results: []
+                }
+                )
+            }
            
          }).catch((error)=>{
              alert(error);
@@ -46,9 +50,9 @@ class Search extends Component {
               </div>
             </div>
             <div className="search-books-results">
-                {this.state.results.length>0?(<BookListItem books={this.state.results} currentlyReading={this.props.currentlyReading} 
-              wantToRead={this.props.wantToRead}
-               read={this.props.read} addToCurrent = {this.props.addToCurrent}/>):(<div>Sorry!There is no book about {this.state.query},please change your input,and try again!</div>)}
+                {this.state.results.length>0?(<BookListItem books={this.state.results} CurrentlyReading={this.props.CurrentlyReading} 
+              WantToRead={this.props.WantToRead}
+               Read={this.props.Read} addToCurrent = {this.props.addToCurrent}/>):(<div>Sorry!There is no book about {this.state.query},please change your input,and try again!</div>)}
                 
             </div>
           </div>

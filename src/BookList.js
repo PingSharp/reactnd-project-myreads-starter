@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
 import BookListItem from './BookListItem'
 
 class BookList extends Component{
@@ -14,22 +13,22 @@ class BookList extends Component{
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                 {
-                    this.props.currentlyReading.length > 0 &&
-                    <BookListItem books={this.props.currentlyReading} addToCurrent={this.props.addToCurrent} isAddedIntoCurrently = {true}/>
+                    this.props.CurrentlyReading.length > 0 &&
+                    <BookListItem books={this.props.CurrentlyReading} addToCurrent={this.props.addToCurrent} isAddedIntoCurrently = {true}/>
                 }
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
                   {
-                    this.props.wantToRead.length > 0 &&
-                    <BookListItem books={this.props.wantToRead} addToCurrent={this.props.addToCurrent} isAddedIntoWant = {true}/>
+                    this.props.WantToRead.length > 0 &&
+                    <BookListItem books={this.props.WantToRead} addToCurrent={this.props.addToCurrent} isAddedIntoWant = {true}/>
                   }
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
                   {
-                    this.props.read.length > 0 &&
-                    <BookListItem books={this.props.read} addToCurrent={this.props.addToCurrent} isAddedIntoRead = {true}/>
+                    this.props.Read.length > 0 &&
+                    <BookListItem books={this.props.Read} addToCurrent={this.props.addToCurrent} isAddedIntoRead = {true}/>
                 }
                 </div>
               </div>

@@ -5,7 +5,6 @@ import {Route} from 'react-router-dom'
 import Search from './Search'
 import BookList from './BookList'
 import SearchOption from './SearchOption'
-import BookListItem from './BookListItem'
 import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
@@ -17,41 +16,77 @@ class BooksApp extends React.Component {
   }
   componentDidMount(){
     BooksAPI.getAll().then((books)=>{
-      this.setState({Books: books,CurrentlyReading: books.slice(0,2),WantToRead: books.slice(2,4),Read: books.slice(4)})
+      this.setState({Books: books,CurrentlyReading: books.filter(book=>book.shelf==="currentlyReading"),
+      WantToRead: books.filter(book=>book.shelf==="wantToRead"),
+      Read:  books.filter(book=>book.shelf==="read")})
     });
+  }
+  ifInReadIncludes(book){
+    let bookIds = this.state.Read.map(book=>book.id);
+    if(bookIds.includes(book.id)){
+      let newRead = this.state.Read;
+      let index = newRead.indexOf(book);
+      newRead.splice(index,1);
+      this.setState({Read: newRead})
+      return true;
+    }
+  }
+  ifInWantToReadIncludes(book){
+    let bookIds = this.state.WantToRead.map(book=>book.id);
+    if(bookIds.includes(book.id)){
+      let newWRead = this.state.WantToRead;
+        let index = newWRead.indexOf(book);
+        newWRead.splice(index,1);
+        this.setState({WantToRead: newWRead})
+        return true;
+    }
+  }
+  ifInCurrentlyReadIncludes(book){
+    let bookIds = this.state.CurrentlyReading.map(book=>book.id);
+    if(bookIds.includes(book.id)){
+      let newCr = this.state.CurrentlyReading;
+        let index = newCr.indexOf(book);
+        newCr.splice(index,1);
+        this.setState({CurrentlyReading: newCr})
+        return true;
+    }
+  }
+  addTocurrent(book,shelf){
+    let newCurrentlyReading = this.state.CurrentlyReading;
+    newCurrentlyReading.push(book);
+    this.setState(
+    {CurrentlyReading:newCurrentlyReading}
+    )
+    BooksAPI.update(book,shelf).then((res)=>console.log(res)).catch(error=>console.log(error));     
+  }
+  addToWant(book,shelf){
+    let newWantToRead = this.state.WantToRead;
+        newWantToRead.push(book);
+        this.setState(
+        {WantToRead:newWantToRead}
+        )
+        BooksAPI.update(book,shelf).then((res)=>console.log(res)).catch(error=>console.log(error));
+  }
+  addToRead(book,shelf){
+    let newRead = this.state.Read;
+        newRead.push(book);
+        this.setState(
+        {Read:newRead}
+        )
+        BooksAPI.update(book,shelf).then((res)=>console.log(res)).catch(error=>console.log(error));
   }
   addToCurrentlyReadding = (book,value)=>{
     if(value === 'currentlyReading'){
 
-      if(this.state.Read.includes(book)){
-        let newCurrentlyReading = this.state.CurrentlyReading;
-        newCurrentlyReading.push(book);
-        this.setState(
-        {CurrentlyReading:newCurrentlyReading}
-        )
-        let newRead = this.state.Read;
-        let index = newRead.indexOf(book);
-        newRead.splice(index,1);
-        this.setState({Read: newRead})
+      if(this.ifInReadIncludes(book)){
+       this.addTocurrent(book,value);
       }
-      else if(this.state.WantToRead.includes(book)){
-        let newCurrentlyReading = this.state.CurrentlyReading;
-        newCurrentlyReading.push(book);
-        this.setState(
-        {CurrentlyReading:newCurrentlyReading}
-        )
-        let newWRead = this.state.WantToRead;
-        let index = newWRead.indexOf(book);
-        newWRead.splice(index,1);
-        this.setState({WantToRead: newWRead})
+      else if(this.ifInWantToReadIncludes(book)){
+        this.addTocurrent(book,value);
       }
       else{
         if(!this.state.CurrentlyReading.includes(book)){
-        let newCurrentlyReading = this.state.CurrentlyReading;
-        newCurrentlyReading.push(book);
-        this.setState(
-        {CurrentlyReading:newCurrentlyReading}
-        )
+         this.addTocurrent(book,value);
         }
         else{
         alert("This book is already added into CurrentlyReading")
@@ -59,35 +94,15 @@ class BooksApp extends React.Component {
       }
     }
     else if(value === 'wantToRead'){
-      if(this.state.Read.includes(book)){
-        let newWantToRead = this.state.WantToRead;
-        newWantToRead.push(book);
-        this.setState(
-        {WantToRead:newWantToRead}
-        )
-        let newRead = this.state.Read;
-        let index = newRead.indexOf(book);
-        newRead.splice(index,1);
-        this.setState({Read: newRead})
+      if(this.ifInReadIncludes(book)){
+        this.addToWant(book,value);
       }
-      else if(this.state.CurrentlyReading.includes(book)){
-        let newWantToRead = this.state.WantToRead;
-        newWantToRead.push(book);
-        this.setState(
-        {WantToRead:newWantToRead}
-        )
-        let newCr = this.state.CurrentlyReading;
-        let index = newCr.indexOf(book);
-        newCr.splice(index,1);
-        this.setState({CurrentlyReading: newCr})
+      else if(this.ifInCurrentlyReadIncludes(book)){
+        this.addToWant(book,value);     
       }
       else{
         if(!this.state.WantToRead.includes(book)){
-          let newWantToRead = this.state.WantToRead;
-          newWantToRead.push(book);
-          this.setState(
-          {WantToRead:newWantToRead}
-          )
+         this.addToWant(book,value);
         }
         else{
         alert("This book is already added into Want to Read!")
@@ -95,35 +110,15 @@ class BooksApp extends React.Component {
       }
     }
     else if(value === 'read'){
-      if(this.state.WantToRead.includes(book)){
-        let newRead = this.state.Read;
-        newRead.push(book);
-        this.setState(
-        {Read:newRead}
-        )
-        let newWRead = this.state.WantToRead;
-        let index = newWRead.indexOf(book);
-        newWRead.splice(index,1);
-        this.setState({WantToRead: newWRead})
+      if(this.ifInWantToReadIncludes(book)){
+        this.addToRead(book,value);
       }
-      else if(this.state.CurrentlyReading.includes(book)){
-        let newRead = this.state.Read;
-        newRead.push(book);
-        this.setState(
-        {Read:newRead}
-        )
-        let newCr = this.state.CurrentlyReading;
-        let index = newCr.indexOf(book);
-        newCr.splice(index,1);
-        this.setState({CurrentlyReading: newCr})
+      else if(this.ifInCurrentlyReadIncludes(book)){
+        this.addToRead(book,value);
       }
       else{
         if(!this.state.Read.includes(book)){
-        let newRead = this.state.Read;
-        newRead.push(book);
-        this.setState(
-        {Read:newRead}
-        )
+          this.addToRead(book,value);
         }
         else{
         alert("This book is already added into Read!")
@@ -140,9 +135,9 @@ class BooksApp extends React.Component {
       <div className="app">
           <Route exact path="/" render = {
             ()=>(
-              <BookList currentlyReading={this.state.CurrentlyReading}
-              wantToRead={this.state.WantToRead}
-               read={this.state.Read}
+              <BookList CurrentlyReading={this.state.CurrentlyReading}
+              WantToRead={this.state.WantToRead}
+               Read={this.state.Read}
                addToCurrent={this.addToCurrentlyReadding}/>
             )
           }
@@ -156,9 +151,9 @@ class BooksApp extends React.Component {
 
          <Route path="/search" render = {
            ()=>(
-             <Search currentlyReading={this.state.CurrentlyReading}
-              wantToRead={this.state.WantToRead}
-               read={this.state.Read}
+             <Search CurrentlyReading={this.state.CurrentlyReading}
+              WantToRead={this.state.WantToRead}
+               Read={this.state.Read}
                addToCurrent={this.addToCurrentlyReadding}/>
            )
          }
