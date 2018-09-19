@@ -7,7 +7,6 @@ class Search extends Component {
     state = {
         query:'',
         results: []
-
     }
     updateQuery = (query)=>{
         this.setState({
@@ -23,15 +22,12 @@ class Search extends Component {
                     results: []
                 }
                 )
-            }
-           
+            }          
          }).catch((error)=>{
              alert(error);
          })
     }
-    render(){
-       
-        
+    render(){        
         return(
         <div className="search-books">
             <div className="search-books-bar">
@@ -46,14 +42,12 @@ class Search extends Component {
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
                 <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={(event)=>this.updateQuery(event.target.value)}/>
-
               </div>
             </div>
             <div className="search-books-results">
                 {this.state.results.length>0?(<BookListItem books={this.state.results} CurrentlyReading={this.props.CurrentlyReading} 
               WantToRead={this.props.WantToRead}
-               Read={this.props.Read} addToCurrent = {this.props.addToCurrent}/>):(<div>Sorry!There is no book about {this.state.query},please change your input,and try again!</div>)}
-                
+               Read={this.props.Read} addToCurrent = {this.props.addToCurrent} updateRating = {false}/>):(<div>Sorry!There is no book about {this.state.query},please change your input,and try again!</div>)}                
             </div>
           </div>
         )

@@ -14,21 +14,30 @@ class BookList extends Component{
                   <h2 className="bookshelf-title">Currently Reading</h2>
                 {
                     this.props.CurrentlyReading.length > 0 &&
-                    <BookListItem books={this.props.CurrentlyReading} addToCurrent={this.props.addToCurrent} isAddedIntoCurrently = {true}/>
+                    <BookListItem books={this.props.CurrentlyReading}
+                     addToCurrent={this.props.addToCurrent} 
+                     isAddedIntoCurrently = {true}
+                     UpdateRating = {this.props.UpdateRating}/>
                 }
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
                   {
                     this.props.WantToRead.length > 0 &&
-                    <BookListItem books={this.props.WantToRead} addToCurrent={this.props.addToCurrent} isAddedIntoWant = {true}/>
+                    <BookListItem books={this.props.WantToRead}
+                     addToCurrent={this.props.addToCurrent} 
+                     isAddedIntoWant = {true}
+                     UpdateRating = {this.props.UpdateRating}/>
                   }
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
                   {
                     this.props.Read.length > 0 &&
-                    <BookListItem books={this.props.Read} addToCurrent={this.props.addToCurrent} isAddedIntoRead = {true}/>
+                    <BookListItem books={this.props.Read}
+                     addToCurrent={this.props.addToCurrent} 
+                     isAddedIntoRead = {true}
+                     UpdateRating = {this.props.UpdateRating}/>
                 }
                 </div>
               </div>

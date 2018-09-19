@@ -28,17 +28,18 @@ class BookListItem extends Component{
                                 (<option value="read" >Read</option>)} 
                                 {!currently.includes(book.id)&&!want.includes(book.id)&&!read.includes(book.id)&&
                                 this.props.isAddedIntoCurrently===undefined&&this.props.isAddedIntoRead===undefined&&this.props.isAddedIntoWant===undefined
-                                 ?(<option value="none">✓None</option>):( <option value="none">None</option>)}                 
-                               
+                                 ?(<option value="none">✓None</option>):( <option value="none">None</option>)}                                               
                               </select>
                             </div>
                           </div>
                           <div className="book-title">{book.title}</div>
                           <div className="book-authors">{book.authors}</div>
+                          {this.props.updateRating===undefined&&(book.averageRating===undefined?(<div className="book-rating">rating:0 <button value="+" onClick={(event)=>this.props.UpdateRating(book,event.target.value,)}>+</button><button value="-" onClick={(event)=>this.props.UpdateRating(book,event.target.value,)}>-</button></div>):
+                          (<div className="book-rating">rating: {book.averageRating} <button value="+" onClick={(event)=>this.props.UpdateRating(book,event.target.value,)}>+</button><button value="-" onClick={(event)=>this.props.UpdateRating(book,event.target.value,)}>-</button></div>))}
+                          
                         </div>
                       </li>
-                     ))}
-                     
+                     ))}                    
                     </ol>
                   </div>
         )

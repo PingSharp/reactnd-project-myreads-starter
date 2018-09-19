@@ -133,6 +133,11 @@ body, .app {
   color: #999;
 }
 
+.book-rating button{
+  margin-right: 5px;
+  font-size: 1.1em;
+}
+
 .book-top {
   position: relative;
   height: 200px;

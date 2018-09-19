@@ -128,7 +128,62 @@ class BooksApp extends React.Component {
     else{
 
     }
-
+    if(!this.state.Books.includes(book)){
+      let newBooks = this.state.Books;
+      newBooks.push(book);
+      this.setState({
+        Books: newBooks
+      })
+    }
+  }
+  updateRating=(book,value)=>{
+     if(value==="+"){
+       debugger;
+       if(book.averageRating){
+         if(book.averageRating <5){
+         let rating = book.averageRating;
+         rating = ((rating*10)+1)/10;
+         let index = this.state.Books.indexOf(book);
+         let newBooks = this.state.Books;
+         newBooks[index].averageRating = rating;
+         this.setState({
+           Books: newBooks
+         })}
+         else{
+           alert("The highest Rating arrived!")
+         }         
+       }
+       else{
+         debugger;
+         let rating = 0;
+         rating = ((rating*10)+1)/10;
+         let index = this.state.Books.indexOf(book);
+         let newBooks = this.state.Books;
+         newBooks[index]["averageRating"] = rating;
+         this.setState({
+          Books: newBooks
+        })       
+       }       
+     }
+     if(value==="-"){
+      if(book.averageRating){
+        if(book.averageRating>0){
+        let rating = book.averageRating;
+        rating = ((rating*10)-1)/10;
+        let index = this.state.Books.indexOf(book);
+        let newBooks = this.state.Books;
+        newBooks[index].averageRating = rating;
+        this.setState({
+          Books: newBooks
+        }) }
+        else{
+          alert("Rating cant be smaller than 0!");
+        }        
+      }
+      else{
+        alert("Rating cant be smaller than 0!");       
+      }       
+     }
   }
   render() {
     return (
@@ -138,7 +193,8 @@ class BooksApp extends React.Component {
               <BookList CurrentlyReading={this.state.CurrentlyReading}
               WantToRead={this.state.WantToRead}
                Read={this.state.Read}
-               addToCurrent={this.addToCurrentlyReadding}/>
+               addToCurrent={this.addToCurrentlyReadding}
+               UpdateRating = {this.updateRating}/>
             )
           }
           />
@@ -154,7 +210,8 @@ class BooksApp extends React.Component {
              <Search CurrentlyReading={this.state.CurrentlyReading}
               WantToRead={this.state.WantToRead}
                Read={this.state.Read}
-               addToCurrent={this.addToCurrentlyReadding}/>
+               addToCurrent={this.addToCurrentlyReadding}
+               UpdateRating = {this.updateRating}/>
            )
          }
          /> 
