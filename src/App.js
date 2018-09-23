@@ -75,7 +75,7 @@ class BooksApp extends React.Component {
         )
         BooksAPI.update(book,shelf).then((res)=>console.log(res)).catch(error=>console.log(error));
   }
-  addToCurrentlyReadding = (book,value)=>{
+  addTo = (book,value)=>{
     if(value === 'currentlyReading'){
 
       if(this.ifInReadIncludes(book)){
@@ -193,7 +193,7 @@ class BooksApp extends React.Component {
               <BookList CurrentlyReading={this.state.CurrentlyReading}
               WantToRead={this.state.WantToRead}
                Read={this.state.Read}
-               addToCurrent={this.addToCurrentlyReadding}
+               addTo={this.addTo}
                UpdateRating = {this.updateRating}/>
             )
           }
@@ -210,7 +210,7 @@ class BooksApp extends React.Component {
              <Search CurrentlyReading={this.state.CurrentlyReading}
               WantToRead={this.state.WantToRead}
                Read={this.state.Read}
-               addToCurrent={this.addToCurrentlyReadding}
+               addTo={this.addTo}
                UpdateRating = {this.updateRating}/>
            )
          }

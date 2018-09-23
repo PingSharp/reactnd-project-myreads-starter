@@ -1,6 +1,18 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 class BookListItem extends Component{
+    static PropTypes = {
+      books: PropTypes.array,
+      addTo: PropTypes.func,
+      CurrentlyReading: PropTypes.array,
+      WantToRead: PropTypes.array,
+      Read: PropTypes.array,
+      isAddedIntoCurrently: PropTypes.bool,
+      isAddedIntoRead: PropTypes.bool,
+      isAddedIntoWant: PropTypes.bool,
+      updateRating: PropTypes.func
+    }
     render(){
       let currently=[],
       want=[],read=[];
@@ -18,7 +30,7 @@ class BookListItem extends Component{
                           <div className="book-top">
                            {book.imageLinks!== undefined&&(<div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>)} 
                             <div className="book-shelf-changer">
-                              <select defaultValue={"move"} onChange={(event)=>this.props.addToCurrent(book,event.target.value)}>
+                              <select defaultValue={"move"} onChange={(event)=>this.props.addTo(book,event.target.value)}>
                                 <option value="move" disabled>Move to...</option>
                                 {(this.props.CurrentlyReading!==undefined&&currently!==undefined&&currently.includes(book.id))||this.props.isAddedIntoCurrently!==undefined?( <option value="currentlyReading" >✓Currently Reading</option>):
                                 (<option value="currentlyReading" >Currently Reading</option>)} 

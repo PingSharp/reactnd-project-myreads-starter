@@ -2,8 +2,15 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import BookListItem from './BookListItem'
 import * as BooksAPI from './BooksAPI'
+import PropTypes from 'prop-types'
 
 class Search extends Component {
+    static PropTypes = {
+        CurrentlyReading: PropTypes.array,
+        WantToRead: PropTypes.array,
+        Read: PropTypes.array,
+        addTo: PropTypes.func
+    }
     state = {
         query:'',
         results: []
@@ -47,7 +54,7 @@ class Search extends Component {
             <div className="search-books-results">
                 {this.state.results.length>0?(<BookListItem books={this.state.results} CurrentlyReading={this.props.CurrentlyReading} 
               WantToRead={this.props.WantToRead}
-               Read={this.props.Read} addToCurrent = {this.props.addToCurrent} updateRating = {false}/>):(<div>Sorry!There is no book about {this.state.query},please change your input,and try again!</div>)}                
+               Read={this.props.Read} addTo = {this.props.addTo} updateRating = {false}/>):(<div>Sorry!There is no book about {this.state.query},please change your input,and try again!</div>)}                
             </div>
           </div>
         )

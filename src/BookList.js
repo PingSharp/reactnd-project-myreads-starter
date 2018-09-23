@@ -1,7 +1,15 @@
 import React, {Component} from 'react'
 import BookListItem from './BookListItem'
+import PropTypes from 'prop-types'
 
 class BookList extends Component{
+  static PropTypes = {
+    CurrentlyReading : PropTypes.array,
+    addTo: PropTypes.func,
+    UpdateRating: PropTypes.func,
+    WantToRead: PropTypes.array,
+    Read: PropTypes.array
+  }
     render(){
         return (
         <div className="list-books">
@@ -15,7 +23,7 @@ class BookList extends Component{
                 {
                     this.props.CurrentlyReading.length > 0 &&
                     <BookListItem books={this.props.CurrentlyReading}
-                     addToCurrent={this.props.addToCurrent} 
+                     addTo={this.props.addTo} 
                      isAddedIntoCurrently = {true}
                      UpdateRating = {this.props.UpdateRating}/>
                 }
@@ -25,7 +33,7 @@ class BookList extends Component{
                   {
                     this.props.WantToRead.length > 0 &&
                     <BookListItem books={this.props.WantToRead}
-                     addToCurrent={this.props.addToCurrent} 
+                     addTo={this.props.addTo} 
                      isAddedIntoWant = {true}
                      UpdateRating = {this.props.UpdateRating}/>
                   }
@@ -35,7 +43,7 @@ class BookList extends Component{
                   {
                     this.props.Read.length > 0 &&
                     <BookListItem books={this.props.Read}
-                     addToCurrent={this.props.addToCurrent} 
+                     addTo={this.props.addTo} 
                      isAddedIntoRead = {true}
                      UpdateRating = {this.props.UpdateRating}/>
                 }
