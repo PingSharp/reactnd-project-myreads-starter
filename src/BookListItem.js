@@ -11,7 +11,8 @@ class BookListItem extends Component {
     isAddedIntoCurrently: PropTypes.bool,
     isAddedIntoRead: PropTypes.bool,
     isAddedIntoWant: PropTypes.bool,
-    updateRating: PropTypes.func
+    updateRating: PropTypes.bool,
+    UpdateRating: PropTypes.func
   }
   render() {
     /** 
@@ -49,7 +50,10 @@ class BookListItem extends Component {
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>
-                {this.props.updateRating === undefined && (book.averageRating === undefined ? (<div className="book-rating">rating:0 <button value="+" onClick={(event) => this.props.UpdateRating(book, event.target.value)}>+</button><button value="-" onClick={(event) => this.props.UpdateRating(book, event.target.value)}>-</button></div>) :
+                {this.props.updateRating === undefined && (book.averageRating === undefined ?
+                 (<div className="book-rating">rating:0 <button value="+" onClick={(event) =>
+                    this.props.UpdateRating(book, event.target.value)}>+</button>
+                    <button value="-" onClick={(event) => this.props.UpdateRating(book, event.target.value)}>-</button></div>) :
                   (<div className="book-rating">rating: {book.averageRating} <button value="+" onClick={(event) => this.props.UpdateRating(book, event.target.value)}>+</button><button value="-" onClick={(event) => this.props.UpdateRating(book, event.target.value)}>-</button></div>))}
 
               </div>
