@@ -8,12 +8,18 @@ import SearchOption from './SearchOption'
 import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
+  /**
+   * init all books information in state
+   */
   state = {
     Books: [],
     CurrentlyReading: [],
     WantToRead: [],
     Read: []
   }
+  /**
+   *after the component did mount this function will fetch all books information and then store the information in state. 
+   */
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({
@@ -23,6 +29,9 @@ class BooksApp extends React.Component {
       });
     });
   }
+  /**
+   * Determine if the book belongs to Read shelf,if yes this books will be removed from Read shelf.
+   */
   ifInReadIncludes(book) {
     let bookIds = this.state.Read.map(book => book.id);
     if (bookIds.includes(book.id)) {
@@ -33,6 +42,9 @@ class BooksApp extends React.Component {
       return true;
     }
   }
+  /**
+   * Determine if the book belongs to Want To Read shelf,if yes this books will be removed from this shelf.
+   */
   ifInWantToReadIncludes(book) {
     let bookIds = this.state.WantToRead.map(book => book.id);
     if (bookIds.includes(book.id)) {
@@ -43,6 +55,9 @@ class BooksApp extends React.Component {
       return true;
     }
   }
+  /**
+   * Determine if the book belongs to Currently Reading shelf,if yes this books will be removed from this shelf.
+   */
   ifInCurrentlyReadIncludes(book) {
     let bookIds = this.state.CurrentlyReading.map(book => book.id);
     if (bookIds.includes(book.id)) {
@@ -53,6 +68,9 @@ class BooksApp extends React.Component {
       return true;
     }
   }
+  /**
+   * Add the book to CurrentlyReading shelf
+   */
   addTocurrent(book, shelf) {
     let newCurrentlyReading = this.state.CurrentlyReading;
     newCurrentlyReading.push(book);
@@ -61,6 +79,9 @@ class BooksApp extends React.Component {
     );
     BooksAPI.update(book, shelf).then((res) => console.log(res)).catch(error => console.log(error));
   }
+  /**
+   * Add the book to Want To Read shelf
+   */
   addToWant(book, shelf) {
     let newWantToRead = this.state.WantToRead;
     newWantToRead.push(book);
@@ -69,6 +90,9 @@ class BooksApp extends React.Component {
     );
     BooksAPI.update(book, shelf).then((res) => console.log(res)).catch(error => console.log(error));
   }
+  /**
+   * Add the book to Read shelf
+   */
   addToRead(book, shelf) {
     let newRead = this.state.Read;
     newRead.push(book);
@@ -77,6 +101,9 @@ class BooksApp extends React.Component {
     );
     BooksAPI.update(book, shelf).then((res) => console.log(res)).catch(error => console.log(error));
   }
+  /**
+   * Add the book to different shelf and remove the book from the old shelf
+   */
   addTo = (book, value) => {
     if (value === 'currentlyReading') {
 
@@ -138,6 +165,9 @@ class BooksApp extends React.Component {
       });
     }
   }
+  /**
+   * Update the rating for each book
+   */
   updateRating = (book, value) => {
     if (value === "+") {
       if (book.averageRating) {

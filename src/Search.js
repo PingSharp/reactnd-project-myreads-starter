@@ -11,10 +11,18 @@ class Search extends Component {
         Read: PropTypes.array,
         addTo: PropTypes.func
     }
+    /**
+     * init the input query and search results array
+     */
     state = {
         query: '',
         results: []
     }
+    /**
+     * search input will be processed with BooksAPI search method,if there are some results, 
+     * the results will be stored in the results state,
+     * otherwise results state will be set to empty.
+    */
     updateQuery = (query) => {
         this.setState({
             query: query.trim()

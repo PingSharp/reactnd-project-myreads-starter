@@ -14,6 +14,9 @@ class BookListItem extends Component {
     updateRating: PropTypes.func
   }
   render() {
+    /** 
+     * Get the Ids of each books of each shelf and store in the arrays.
+    */
     let currently = [],
       want = [], read = [];
     if (this.props.CurrentlyReading !== undefined && this.props.WantToRead !== undefined && this.props.Read !== undefined) {
