@@ -5,10 +5,10 @@ import * as BooksAPI from './BooksAPI'
 import PropTypes from 'prop-types'
 
 class Search extends Component {
-    static PropTypes = {
-        CurrentlyReading: PropTypes.array,
-        WantToRead: PropTypes.array,
-        Read: PropTypes.array,
+    static propTypes = {
+        CurrentlyReading: PropTypes.array.isRequired,
+        WantToRead: PropTypes.array.isRequired,
+        Read: PropTypes.array.isRequired,
         addTo: PropTypes.func
     }
     /**
@@ -63,7 +63,16 @@ class Search extends Component {
                 <div className="search-books-results">
                     {this.state.results.length > 0 ? (<BookListItem books={this.state.results} CurrentlyReading={this.props.CurrentlyReading}
                         WantToRead={this.props.WantToRead}
-                        Read={this.props.Read} addTo={this.props.addTo} updateRating={false} />) : (<div>Sorry!There is no book about {this.state.query},please change your input,and try again!</div>)}
+                        Read={this.props.Read} addTo={this.props.addTo} updateRating={false} />) :
+                        this.state.query === '' ? (<div>search terms:'Android', 'Art', 'Artificial Intelligence', 'Astronomy', 'Austen', 'Baseball',
+                             'Basketball', 'Bhagat', 'Biography', 'Brief', 'Business', 'Camus', 'Cervantes', 'Christie', 'Classics', 'Comics', 'Cook',
+                             'Cricket', 'Cycling', 'Desai', 'Design', 'Development', 'Digital Marketing', 'Drama', 'Drawing', 'Dumas', 'Education',
+                             'Everything', 'Fantasy', 'Film', 'Finance', 'First', 'Fitness', 'Football', 'Future', 'Games', 'Gandhi', 'Homer', 'Horror',
+                              'Hugo', 'Ibsen', 'Journey', 'Kafka', 'King', 'Lahiri', 'Larsson', 'Learn', 'Literary Fiction', 'Make', 'Manage', 'Marquez',
+                               'Money', 'Mystery', 'Negotiate', 'Painting', 'Philosophy', 'Photography', 'Poetry', 'Production', 'Programming', 'React',
+                               'Redux', 'River', 'Robotics', 'Rowling', 'Satire', 'Science Fiction', 'Shakespeare', 'Singh', 'Swimming', 'Tale',
+                         'Thrun', 'Time', 'Tolstoy', 'Travel', 'Ultimate', 'Virtual Reality', 'Web Development', 'iOS'</div>) : (<div>Sorry!There is no book about {this.state.query},please change your input,and try again!</div>
+                            )}
                 </div>
             </div>
         )

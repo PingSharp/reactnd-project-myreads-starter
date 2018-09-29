@@ -3,12 +3,12 @@ import BookListItem from './BookListItem'
 import PropTypes from 'prop-types'
 
 class BookList extends Component {
-  static PropTypes = {
-    CurrentlyReading: PropTypes.array,
+  static propTypes = {
+    CurrentlyReading: PropTypes.array.isRequired,
     addTo: PropTypes.func,
     UpdateRating: PropTypes.func,
-    WantToRead: PropTypes.array,
-    Read: PropTypes.array
+    WantToRead: PropTypes.array.isRequired,
+    Read: PropTypes.array.isRequired
   }
   render() {
     return (

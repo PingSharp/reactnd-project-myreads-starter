@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 class BookListItem extends Component {
-  static PropTypes = {
+  static propTypes = {
     books: PropTypes.array,
     addTo: PropTypes.func,
     CurrentlyReading: PropTypes.array,
