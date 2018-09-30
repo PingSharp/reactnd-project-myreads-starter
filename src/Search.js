@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import {debounce,throttle} from 'throttle-debounce'
 import BookListItem from './BookListItem'
 import * as BooksAPI from './BooksAPI'
-import PropTypes from 'prop-types'
+
 
 class Search extends Component {
     static propTypes = {
@@ -26,7 +28,10 @@ class Search extends Component {
     updateQuery = (query) => {
         this.setState({
             query: query
-        });
+        },()=>{debounce(500,this.searchQuery(query))});
+                              
+    }
+    searchQuery = (query) => {
         BooksAPI.search(query.trim().replace(/  +/g, ' ')).then((books) => {
             if (books) {
                 this.setState({
